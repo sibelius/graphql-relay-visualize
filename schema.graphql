@@ -1,0 +1,250 @@
+"""
+Directs the executor to defer this fragment when the `if` argument is true or undefined.
+"""
+directive @defer(
+  """Deferred when true or undefined."""
+  if: Boolean! = true
+
+  """Unique name"""
+  label: String
+) on FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"""
+Directs the executor to stream plural fields when the `if` argument is true or undefined.
+"""
+directive @stream(
+  """Number of items to return immediately"""
+  initialCount: Int! = 0
+
+  """Stream when true or undefined."""
+  if: Boolean! = true
+
+  """Unique name"""
+  label: String
+) on FIELD
+
+"""A person who writes posts and comments."""
+type User implements Node {
+  """The ID of an object"""
+  id: ID!
+  name: String!
+  username: String!
+  bio: String
+  location: String
+  website: String
+
+  """Hex color used to draw the avatar."""
+  avatarColor: String!
+  joinedAt: String!
+  followerCount: Int!
+  followingCount: Int!
+  postCount: Int!
+  posts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): PostConnection!
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""A connection to a list of items."""
+type PostConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PostEdge]
+  totalCount: Int!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+"""An edge in a connection."""
+type PostEdge {
+  """The item at the end of the edge"""
+  node: Post
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""A blog post. Liking it from anywhere updates it everywhere."""
+type Post implements Node {
+  """The ID of an object"""
+  id: ID!
+  title: String!
+  body: String!
+  excerpt: String!
+  createdAt: String!
+  tags: [String!]!
+  likeCount: Int!
+  viewerHasLiked: Boolean!
+  author: User!
+
+  """Expensive analytics (~1.2s). A natural candidate for @defer."""
+  insights: PostInsights!
+
+  """Backed by a flaky service that always fails, to demo @catch."""
+  sponsor: String
+  comments(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): CommentConnection!
+}
+
+type PostInsights {
+  readMinutes: Int!
+  wordCount: Int!
+  sentiment: String!
+  related: [String!]!
+}
+
+"""A connection to a list of items."""
+type CommentConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CommentEdge]
+  totalCount: Int!
+}
+
+"""An edge in a connection."""
+type CommentEdge {
+  """The item at the end of the edge"""
+  node: Comment
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type Comment implements Node {
+  """The ID of an object"""
+  id: ID!
+  body: String!
+  createdAt: String!
+  author: User!
+}
+
+type Query {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Fetches objects given their IDs"""
+  nodes(
+    """The IDs of objects"""
+    ids: [ID!]!
+  ): [Node]!
+  viewer: User!
+  user(username: String!): User
+  post(id: ID!): Post
+  users: [User!]!
+
+  """Every post, newest first. A Relay-style cursor connection."""
+  feed(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): PostConnection!
+
+  """
+  Produced one item at a time (~400ms apart). Use @stream to render items as they arrive.
+  """
+  activity: [Activity!]!
+
+  """The post with the most likes."""
+  topPost: Post!
+}
+
+type Activity {
+  id: ID!
+  message: String!
+  at: String!
+  actor: User!
+}
+
+type Mutation {
+  likePost(input: LikePostInput!): LikePostPayload
+  renameUser(input: RenameUserInput!): RenameUserPayload
+  addComment(input: AddCommentInput!): AddCommentPayload
+}
+
+type LikePostPayload {
+  post: Post
+  clientMutationId: String
+}
+
+input LikePostInput {
+  postId: ID!
+  like: Boolean!
+  clientMutationId: String
+}
+
+type RenameUserPayload {
+  user: User
+  clientMutationId: String
+}
+
+input RenameUserInput {
+  userId: ID!
+  name: String!
+  clientMutationId: String
+}
+
+type AddCommentPayload {
+  commentEdge: CommentEdge
+  post: Post
+  clientMutationId: String
+}
+
+input AddCommentInput {
+  postId: ID!
+  body: String!
+  clientMutationId: String
+}

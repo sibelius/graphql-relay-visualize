@@ -1,0 +1,60 @@
+@import "tailwindcss";
+@import "@xyflow/react/dist/style.css";
+
+@theme {
+  --color-bg: #0a0c11;
+  --color-panel: #11141b;
+  --color-panel-2: #171b24;
+  --color-line: #242a38;
+  --color-ink: #e7e9f0;
+  --color-muted: #8a93a8;
+  --color-faint: #5a6275;
+  --color-accent: #f26b00;
+  --color-gql: #e535ab;
+  --color-ok: #34d399;
+  --color-bad: #f87171;
+  --color-warn: #fbbf24;
+  --color-info: #60a5fa;
+
+  --color-f1: #38bdf8;
+  --color-f2: #34d399;
+  --color-f3: #fbbf24;
+  --color-f4: #a78bfa;
+  --color-f5: #fb7185;
+  --color-f6: #22d3ee;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-jb), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --animate-flash: flash 900ms ease-out;
+  --animate-rise: rise 400ms ease-out both;
+}
+
+@keyframes flash {
+  0% { box-shadow: 0 0 0 2px var(--color-accent), 0 0 24px 2px color-mix(in srgb, var(--color-accent) 50%, transparent); }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+html { color-scheme: dark; }
+body { background: var(--color-bg); color: var(--color-ink); }
+
+::selection { background: color-mix(in srgb, var(--color-accent) 40%, transparent); }
+
+* { scrollbar-width: thin; scrollbar-color: var(--color-line) transparent; }
+
+.shiki { background: transparent !important; }
+.shiki code { counter-reset: line; }
+
+.react-flow__attribution { background: transparent !important; opacity: .45; }
+.react-flow__attribution a { color: var(--color-faint) !important; }
+.react-flow { --xy-background-color: transparent; }
+.react-flow__handle { opacity: 0; }
+
+.react-flow__controls { box-shadow: none !important; border: 1px solid var(--color-line); border-radius: 8px; overflow: hidden; }
+.react-flow__controls-button { background: var(--color-panel-2) !important; border-bottom-color: var(--color-line) !important; fill: var(--color-muted) !important; }
+.react-flow__controls-button:hover { background: var(--color-line) !important; }
