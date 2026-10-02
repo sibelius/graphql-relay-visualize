@@ -2,8 +2,9 @@ import { Fragment } from "react";
 import { PageHeader, Takeaways } from "@/components/ui";
 import { RelayBoundary } from "@/relay/RelayProvider";
 import { ColocationDemo } from "@/components/colocation/ColocationDemo";
+import { pageMetadata } from "@/lib/og";
 
-export const metadata = { title: "Colocation & masking · Relay, visualized" };
+export const metadata = pageMetadata("/colocation");
 
 export default function ColocationPage() {
   return (

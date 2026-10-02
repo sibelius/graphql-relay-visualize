@@ -2,8 +2,9 @@ import { Fragment } from "react";
 import { DemoControls, PageHeader, Takeaways } from "@/components/ui";
 import { RelayBoundary } from "@/relay/RelayProvider";
 import { ConsistencyDemo } from "@/components/consistency/ConsistencyDemo";
+import { pageMetadata } from "@/lib/og";
 
-export const metadata = { title: "Optimistic & consistent · Relay, visualized" };
+export const metadata = pageMetadata("/consistency");
 
 export default function ConsistencyPage() {
   return (

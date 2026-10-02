@@ -4,8 +4,9 @@ import { PageHeader, Takeaways } from "@/components/ui";
 import { ComplexityModel } from "@/components/vsrest/ComplexityModel";
 import { EndpointExplosion } from "@/components/vsrest/EndpointExplosion";
 import { SAMPLES } from "./samples";
+import { pageMetadata } from "@/lib/og";
 
-export const metadata = { title: "vs REST & friends · Relay, visualized" };
+export const metadata = pageMetadata("/vs-rest");
 
 export default async function VsRestPage() {
   const samples = await Promise.all(

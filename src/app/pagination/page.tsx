@@ -2,8 +2,9 @@ import { Fragment } from "react";
 import { DemoControls, PageHeader, Takeaways } from "@/components/ui";
 import { RelayBoundary } from "@/relay/RelayProvider";
 import { PaginationDemo } from "@/components/pagination/PaginationDemo";
+import { pageMetadata } from "@/lib/og";
 
-export const metadata = { title: "Connections · Relay, visualized" };
+export const metadata = pageMetadata("/pagination");
 
 export default function PaginationPage() {
   return (

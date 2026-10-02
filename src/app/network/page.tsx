@@ -2,8 +2,9 @@ import { Fragment } from "react";
 import { DemoControls, PageHeader, Takeaways } from "@/components/ui";
 import { RelayBoundary } from "@/relay/RelayProvider";
 import { WaterfallDemo } from "@/components/network/WaterfallDemo";
+import { pageMetadata } from "@/lib/og";
 
-export const metadata = { title: "One round trip · Relay, visualized" };
+export const metadata = pageMetadata("/network");
 
 export default function NetworkPage() {
   return (

@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { NAV } from "@/components/shell/nav";
 import { Pipeline } from "@/components/viz/Pipeline";
+import { pageMetadata } from "@/lib/og";
+
+export const metadata = pageMetadata("/");
 
 const WHY: Record<string, string> = {
   "/network": "Nested data in one request. Watch a REST waterfall and N+1 fetches race a single GraphQL query.",

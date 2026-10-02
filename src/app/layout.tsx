@@ -3,14 +3,18 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import { RelayProvider } from "@/relay/RelayProvider";
 import { MobileNav, Sidebar } from "@/components/shell/Sidebar";
 import { DevDrawer } from "@/components/shell/DevDrawer";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/og";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono-jb" });
 
 export const metadata: Metadata = {
-  title: "Relay, visualized",
-  description: "Interactive visualizations of what GraphQL and Relay do for a React app.",
+  metadataBase: new URL(SITE_URL),
+  title: SITE_NAME,
+  description: SITE_DESCRIPTION,
+  openGraph: { title: SITE_NAME, description: SITE_DESCRIPTION, url: "/", siteName: SITE_NAME, type: "website", locale: "en_US" },
+  twitter: { card: "summary_large_image", title: SITE_NAME, description: SITE_DESCRIPTION },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

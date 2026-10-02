@@ -3,8 +3,9 @@ import { codeToHtml } from "shiki";
 import { PageHeader, Takeaways } from "@/components/ui";
 import { FeatureCompare } from "@/components/vsapollo/FeatureCompare";
 import { APOLLO_WINS, FEATURES } from "./features";
+import { pageMetadata } from "@/lib/og";
 
-export const metadata = { title: "Relay vs Apollo · Relay, visualized" };
+export const metadata = pageMetadata("/vs-apollo");
 
 const hl = (code: string) => codeToHtml(code, { lang: "tsx", theme: "github-dark-default" });
 

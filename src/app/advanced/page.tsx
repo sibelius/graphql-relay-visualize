@@ -7,8 +7,9 @@ import { DeferDemo } from "@/components/advanced/DeferDemo";
 import { StreamDemo } from "@/components/advanced/StreamDemo";
 import { RequiredCatchDemo } from "@/components/advanced/RequiredCatchDemo";
 import { ServerPreloaded } from "@/components/advanced/ServerPreloaded";
+import { pageMetadata } from "@/lib/og";
 
-export const metadata = { title: "Advanced Relay · Relay, visualized" };
+export const metadata = pageMetadata("/advanced");
 export const dynamic = "force-dynamic";
 
 const SECTIONS = [

@@ -6,12 +6,12 @@ import { codeToHtml } from "shiki";
 import { listArtifacts, readArtifact } from "@/server/artifacts";
 import { PageHeader, Takeaways } from "@/components/ui";
 import { formatBytes } from "@/lib/format";
+import { pageMetadata } from "@/lib/og";
 
 export const dynamicParams = false;
 export const generateStaticParams = () => listArtifacts().map((artifact) => ({ artifact }));
-export const generateMetadata = async ({ params }: { params: Promise<{ artifact: string }> }) => ({
-  title: `${(await params).artifact} · The compiler · Relay, visualized`,
-});
+export const generateMetadata = async ({ params }: { params: Promise<{ artifact: string }> }) =>
+  pageMetadata("/compiler", (await params).artifact);
 
 const KIND_COLOR = { query: "text-info", fragment: "text-f2", mutation: "text-gql", refetchable: "text-f3" } as const;
 const highlight = (code: string, lang: "graphql" | "ts") => codeToHtml(code, { lang, theme: "github-dark-default" });

@@ -2,8 +2,9 @@ import { Fragment } from "react";
 import { schemaGraph } from "@/server/schemaGraph";
 import { PageHeader, Takeaways } from "@/components/ui";
 import { SchemaExplorer } from "@/components/schema/SchemaExplorer";
+import { pageMetadata } from "@/lib/og";
 
-export const metadata = { title: "Schema graph · Relay, visualized" };
+export const metadata = pageMetadata("/schema");
 
 export default function SchemaPage() {
   return (

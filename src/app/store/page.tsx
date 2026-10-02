@@ -2,8 +2,9 @@ import { Fragment } from "react";
 import { PageHeader, Takeaways } from "@/components/ui";
 import { RelayBoundary } from "@/relay/RelayProvider";
 import { StoreDemo } from "@/components/store/StoreDemo";
+import { pageMetadata } from "@/lib/og";
 
-export const metadata = { title: "Normalized store · Relay, visualized" };
+export const metadata = pageMetadata("/store");
 
 export default function StorePage() {
   return (
